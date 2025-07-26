@@ -1,8 +1,18 @@
 import express from 'express';
-const app = express();
+import 'reflect-metadata';
+import taskRoutes from './routes/task.route';
+import { AppDataSource } from './data-source';
 
-app.get('/', (_, res) => res.status(200).send('Api funcionando!'));
+AppDataSource.initialize()
+  .then(() => {
+    const app = express();
+    app.use(express.json());
 
-app.listen(3000, () => {
-  console.log('Servidor rodando na porta 3000');
-});
+    app.get('/', (_, res) => res.send('API está funcionando!'));
+    app.use('/api', taskRoutes);
+
+    app.listen(3000, () => {
+      console.log('Servidor rodando em localhost:3000');
+    });
+  })
+  .catch((error) => console.error('Erro ao inicializar o DataSource:', error));
