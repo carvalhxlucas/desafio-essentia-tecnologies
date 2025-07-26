@@ -15,4 +15,4 @@ AppDataSource.initialize()
       console.log('Servidor rodando em localhost:3000');
     });
   })
-  .catch((error) => console.error('Erro ao inicializar o DataSource:', error));
+  .catch((error) => console.error('Erro ao inicializar o banco de dados:', error));
