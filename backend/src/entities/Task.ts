@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
 export class Task {
@@ -11,9 +11,9 @@ export class Task {
   @Column({ default: false })
   completed: boolean;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
-  @Column({ type: 'timestamp', nullable: true }) // Está go horse, implementar atualização no service
+  @UpdateDateColumn({ type: 'timestamp', nullable: true })
   updatedAt?: Date;
 }
