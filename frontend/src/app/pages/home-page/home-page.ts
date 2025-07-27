@@ -65,4 +65,16 @@ export class HomePage implements OnInit {
       }
     });
   }
+
+  deleteTask(taskId: number): void {
+    this.taskService.deleteTask(taskId).subscribe({
+      next: () => {
+        this.tasks = this.tasks.filter(task => task.id !== taskId);
+        console.log('Tarefa deletada com sucesso!');
+      },
+      error: (err: any) => {
+        console.error('Erro ao deletar tarefa:', err);
+      }
+    });
+  }
 }

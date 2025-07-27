@@ -25,4 +25,9 @@ export class TaskService {
   toggleCompletion(task: Task): Observable<Task> {
     return this.http.patch<Task>(`${this.apiUrl}/${task.id}/concluir`, {});
   }
+
+  // Método para deletar uma tarefa
+  deleteTask(taskId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${taskId}`);
+  }
 }
