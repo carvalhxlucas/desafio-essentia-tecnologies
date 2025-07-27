@@ -1,11 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { TaskService } from '../../services/task.service';
+import { Task } from '../../models/task.model';
 
 @Component({
   selector: 'app-home-page',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss'
 })
-export class HomePage {
+export class HomePage implements OnInit {
+  
+  tasks: Task[] = [];
 
+  constructor(private taskService: TaskService) {}
+
+  ngOnInit(): void {
+    this.loadTasks();
+  }
+
+  loadTasks(): void {
+    this.taskService.getTasks().subscribe({
+      next: (data) => {
+        this.tasks = data;
+        console.log('Tarefas carregadas com sucesso:', this.tasks);
+      },
+      error: (err) => {
+        console.error('Erro ao carregar tarefas:', err);
+      }
+    });
+  }
 }
