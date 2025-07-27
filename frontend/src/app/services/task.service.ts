@@ -30,4 +30,9 @@ export class TaskService {
   deleteTask(taskId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${taskId}`);
   }
+
+  // Método para atualizar uma tarefa
+  updateTask(taskId: number, updates: { title: string }): Observable<Task> {
+    return this.http.put<Task>(`${this.apiUrl}/${taskId}`, updates);
+  }
 }

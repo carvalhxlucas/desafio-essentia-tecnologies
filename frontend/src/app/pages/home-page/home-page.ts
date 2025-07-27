@@ -18,6 +18,9 @@ export class HomePage implements OnInit {
   tasks: Task[] = [];
   newTaskTitle: string = '';
 
+  editingTaskId: number | null = null;
+  editedTaskTitle: string = '';
+
   constructor(private taskService: TaskService) {}
 
   ngOnInit(): void {
@@ -74,6 +77,36 @@ export class HomePage implements OnInit {
       },
       error: (err: any) => {
         console.error('Erro ao deletar tarefa:', err);
+      }
+    });
+  }
+
+  startEdit(task: Task): void {
+    this.editingTaskId = task.id;
+    this.editedTaskTitle = task.title;
+  }
+
+  cancelEdit(): void {
+    this.editingTaskId = null;
+    this.editedTaskTitle = '';
+  }
+
+  saveTask(taskToSave: Task): void {
+    if (!this.editedTaskTitle.trim()) {
+      this.deleteTask(taskToSave.id);
+      return;
+    }
+
+    this.taskService.updateTask(taskToSave.id, { title: this.editedTaskTitle.trim() }).subscribe({
+      next: (updatedTask) => {
+        taskToSave.title = updatedTask.title;
+
+        this.cancelEdit();
+        console.log('Tarefa atualizada com sucesso!', updatedTask);
+      },
+      error: (err: any) => {
+        console.error('Erro ao atualizar tarefa:', err);
+        this.cancelEdit();
       }
     });
   }
