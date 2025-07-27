@@ -53,4 +53,16 @@ export class HomePage implements OnInit {
       }
     });
   }
+
+  toggleTaskCompletion(task: Task): void {
+    this.taskService.toggleCompletion(task).subscribe({
+      next: (updatedTask) => { 
+        task.completed = updatedTask.completed;
+        console.log('Status da tarefa atualizado!', updatedTask);
+      },
+      error: (err: any) => {
+        console.error('Erro ao atualizar status da tarefa:', err);
+      }
+    });
+  }
 }

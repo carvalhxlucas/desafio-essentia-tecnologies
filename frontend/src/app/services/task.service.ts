@@ -20,4 +20,9 @@ export class TaskService {
   addTask(taskData: { title: string }): Observable<Task> {
     return this.http.post<Task>(this.apiUrl, taskData);
   }
+
+  // Método para concluir uma tarefa
+  toggleCompletion(task: Task): Observable<Task> {
+    return this.http.patch<Task>(`${this.apiUrl}/${task.id}/concluir`, {});
+  }
 }

@@ -11,7 +11,7 @@ router.get('/tarefas', taskController.findAll.bind(taskController));
 router.get('/tarefas/:id', taskController.findById.bind(taskController));
 router.post('/tarefas', taskController.create.bind(taskController));
 router.put('/tarefas/:id', taskController.update.bind(taskController)); 
-router.patch('/tarefas/:id/toggle', taskController.toggleCompletion.bind(taskController));
+router.patch('/tarefas/:id/concluir', taskController.toggleCompletion.bind(taskController));
 router.delete('/tarefas/:id', taskController.delete.bind(taskController));
 
 export default router;
