@@ -1,19 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { FormsModule } from '@angular/forms';
 import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/task.model';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    FormsModule
+  ],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss'
 })
 export class HomePage implements OnInit {
-  
   tasks: Task[] = [];
+  newTaskTitle: string = '';
 
   constructor(private taskService: TaskService) {}
 
@@ -29,6 +32,24 @@ export class HomePage implements OnInit {
       },
       error: (err) => {
         console.error('Erro ao carregar tarefas:', err);
+      }
+    });
+  }
+
+  addTask(): void {
+    if (!this.newTaskTitle.trim()) {
+      return;
+    }
+
+    this.taskService.addTask({ title: this.newTaskTitle.trim() }).subscribe({
+      next: (newTask: Task) => {
+        console.log('Nova tarefa adicionada:', newTask);
+        this.tasks.push(newTask);
+        this.newTaskTitle = '';
+        console.log('Tarefa adicionada com sucesso!', newTask);
+      },
+      error: (err: any) => {
+        console.error('Erro ao adicionar tarefa:', err);
       }
     });
   }

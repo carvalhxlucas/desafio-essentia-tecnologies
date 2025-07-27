@@ -8,9 +8,11 @@ export class TaskService {
     this.taskRepository = AppDataSource.getRepository(Task);
   }
 
-  async create(title: string): Promise<Task> {
-    const task = this.taskRepository.create({ title });
-    return await this.taskRepository.save(task);
+  async create(taskData: { title: string }): Promise<Task> {
+    const task = this.taskRepository.create({
+      title: taskData.title
+    });
+    return this.taskRepository.save(task);
   }
 
   async findAll(): Promise<Task[]> {

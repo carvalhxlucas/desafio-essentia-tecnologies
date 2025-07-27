@@ -15,4 +15,9 @@ export class TaskService {
   getTasks(): Observable<Task[]> {
     return this.http.get<Task[]>(this.apiUrl);
   }
+
+  // Método para criar uma nova tarefa
+  addTask(taskData: { title: string }): Observable<Task> {
+    return this.http.post<Task>(this.apiUrl, taskData);
+  }
 }
