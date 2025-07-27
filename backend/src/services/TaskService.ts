@@ -21,28 +21,28 @@ export class TaskService {
     return await this.taskRepository.findOneBy({ id });
   }
 
-  async update(id: number, title?: string): Promise<Task | null> {
+  async update(id: number, taskData: Partial<Task>): Promise<Task | null> {
     const task = await this.taskRepository.findOneBy({ id });
-    if (!task) return null;
-
-    if (title !== undefined) {
-      task.title = title;
+    if (!task) {
+      return null;
     }
 
-    return await this.taskRepository.save(task);
+    this.taskRepository.merge(task, taskData);
+    return this.taskRepository.save(task);
   }
 
-  async delete(id: number): Promise<void> {
-    await this.taskRepository.delete(id);
+  async delete(id: number): Promise<boolean> {
+    const result = await this.taskRepository.delete(id);
+
+    return result.affected !== 0 && result.affected !== null;
   }
 
   async toggleCompletion(id: number): Promise<Task | null> {
     const task = await this.taskRepository.findOneBy({ id });
-    if (!task) return null;
-
+    if (!task) {
+      return null;
+    }
     task.completed = !task.completed;
-    task.updatedAt = new Date();
-
-    return await this.taskRepository.save(task);
+    return this.taskRepository.save(task);
   }
 }

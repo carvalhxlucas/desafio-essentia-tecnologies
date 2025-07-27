@@ -1,13 +1,17 @@
 import { Router } from 'express';
 import { TaskController } from '../controllers/TaskController';
+import { TaskService } from '../services/TaskService';
 
 const router = Router();
 
-router.get('/tarefas', TaskController.findAll);
-router.get('/tarefas/:id', TaskController.findById);
-router.post('/tarefas', TaskController.create);
-router.put('/tarefas/:id', TaskController.update); 
-router.patch('/tarefas/:id/toggle', TaskController.toggleCompletion);
-router.delete('/tarefas/:id', TaskController.delete);
+const taskService = new TaskService();
+const taskController = new TaskController(taskService);
+
+router.get('/tarefas', taskController.findAll.bind(taskController));
+router.get('/tarefas/:id', taskController.findById.bind(taskController));
+router.post('/tarefas', taskController.create.bind(taskController));
+router.put('/tarefas/:id', taskController.update.bind(taskController)); 
+router.patch('/tarefas/:id/toggle', taskController.toggleCompletion.bind(taskController));
+router.delete('/tarefas/:id', taskController.delete.bind(taskController));
 
 export default router;

@@ -4,65 +4,105 @@ import { TaskService } from '../services/TaskService';
 export class TaskController {
   constructor(private taskService: TaskService) {}
 
-  async findAll(req: Request, res: Response): Promise<Response> {
-    const tasks = await this.taskService.findAll();
-    return res.json(tasks);
-  }
-
-  async findById(req: Request, res: Response): Promise<Response> {
-    const id = Number(req.params.id);
-    const task = await this.taskService.findById(id);
-
-    if (!task) {
-      return res.status(404).json({ message: 'Tarefa não encontrada' });
-    }
-
-    return res.json(task);
-  }
-
+  /**
+   * @description Cria uma nova tarefa.
+   * @route POST /tasks
+   */
   async create(req: Request, res: Response): Promise<Response> {
-    const { title } = req.body;
-
-    if (!title) {
-      return res.status(400).json({ message: 'Título é obrigatório!' });
+    try {
+      const task = await this.taskService.create(req.body);
+      return res.status(201).json(task);
+    } catch (error) {
+      return res.status(500).json({ message: 'Erro ao criar a tarefa.' });
     }
-
-    const task = await this.taskService.create(title.trim());
-    return res.status(201).json(task);
   }
 
+  /**
+   * @description Lista todas as tarefas.
+   * @route GET /tasks
+   */
+  async findAll(req: Request, res: Response): Promise<Response> {
+    try {
+      const tasks = await this.taskService.findAll();
+      return res.status(200).json(tasks);
+    } catch (error) {
+      return res.status(500).json({ message: 'Erro ao buscar as tarefas.' });
+    }
+  }
+
+  /**
+   * @description Busca uma tarefa pelo ID.
+   * @route GET /tasks/:id
+   */
+  async findById(req: Request, res: Response): Promise<Response> {
+    try {
+      const id = Number(req.params.id);
+      const task = await this.taskService.findById(id);
+
+      if (!task) {
+        return res.status(404).json({ message: 'Tarefa não encontrada.' });
+      }
+
+      return res.status(200).json(task);
+    } catch (error) {
+      return res.status(500).json({ message: 'Erro ao buscar a tarefa.' });
+    }
+  }
+
+  /**
+   * @description Atualiza uma tarefa existente.
+   * @route PUT /tasks/:id
+   */
   async update(req: Request, res: Response): Promise<Response> {
-    const id = Number(req.params.id);
-    const { title } = req.body;
+    try {
+      const id = Number(req.params.id);
+      const updatedTask = await this.taskService.update(id, req.body);
 
-    const task = await this.taskService.update(id, title?.trim());
-    if (!task) {
-      return res.status(404).json({ message: 'Tarefa não encontrada' });
+      if (!updatedTask) {
+        return res.status(404).json({ message: 'Tarefa não encontrada para atualização.' });
+      }
+
+      return res.status(200).json(updatedTask);
+    } catch (error) {
+      return res.status(500).json({ message: 'Erro ao atualizar a tarefa.' });
     }
-
-    return res.json(task);
   }
 
-  async toggleCompletion(req: Request, res: Response): Promise<Response> {
-    const id = Number(req.params.id);
-    const task = await this.taskService.toggleCompletion(id);
-
-    if (!task) {
-      return res.status(404).json({ message: 'Tarefa não encontrada' });
-    }
-
-    return res.json(task);
-  }
-
+  /**
+   * @description Deleta uma tarefa.
+   * @route DELETE /tasks/:id
+   */
   async delete(req: Request, res: Response): Promise<Response> {
-    const id = Number(req.params.id);
-    const task = await this.taskService.findById(id);
+    try {
+      const id = Number(req.params.id);
+      const wasDeleted = await this.taskService.delete(id);
 
-    if (!task) {
-      return res.status(404).json({ message: 'Tarefa não encontrada' });
+      if (!wasDeleted) {
+        return res.status(404).json({ message: 'Tarefa não encontrada para exclusão.' });
+      }
+
+      return res.status(204).send();
+    } catch (error) {
+      return res.status(500).json({ message: 'Erro ao deletar a tarefa.' });
     }
+  }
 
-    await this.taskService.delete(id);
-    return res.status(204).send();
+  /**
+   * @description Marca a tarefa como concluída.
+   * @route PATCH /tasks/:id/toggle
+   */
+  async toggleCompletion(req: Request, res: Response): Promise<Response> {
+    try {
+      const id = Number(req.params.id);
+      const task = await this.taskService.toggleCompletion(id);
+
+      if (!task) {
+        return res.status(404).json({ message: 'Tarefa não encontrada.' });
+      }
+
+      return res.status(200).json(task);
+    } catch (error) {
+      return res.status(500).json({ message: 'Erro ao atualizar o status da tarefa.' });
+    }
   }
 }
