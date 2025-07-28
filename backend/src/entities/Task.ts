@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
+import { User } from './User';
 
 @Entity()
 export class Task {
@@ -10,6 +11,9 @@ export class Task {
 
   @Column({ default: false })
   completed!: boolean;
+
+  @ManyToOne(() => User, (user) => user.tasks)
+  user!: User;
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt!: Date;

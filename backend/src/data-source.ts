@@ -2,6 +2,7 @@ import 'dotenv/config';
 import path from 'path';
 import { DataSource } from 'typeorm';
 import { Task } from './entities/Task';
+import { User } from './entities/User';
 
 require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 
@@ -16,7 +17,7 @@ export const AppDataSource = new DataSource({
   synchronize: true,
   logging: true,
 
-  entities: [Task],
+  entities: [Task, User],
   migrations: [],
   subscribers: [],
 });
