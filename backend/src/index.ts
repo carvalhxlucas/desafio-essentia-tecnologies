@@ -6,11 +6,12 @@ import express from 'express';
 import 'reflect-metadata';
 import cors from 'cors';
 import taskRoutes from './routes/task.route';
+import authRoutes from './routes/auth.route';
 import { AppDataSource } from './data-source';
 
 AppDataSource.initialize()
   .then(() => {
-    console.log("Fonte de dados inicializada com sucesso!");
+    console.log('Banco de dados inicializado com sucesso!');
     
     const app = express();
 
@@ -19,6 +20,7 @@ AppDataSource.initialize()
     app.use(express.json());
 
     // Rotas da aplicação
+    app.use('/api', authRoutes);
     app.use('/api', taskRoutes);
 
     const PORT = process.env.PORT || 3000;
