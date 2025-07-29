@@ -1,30 +1,40 @@
-<div class="auth-container">
-  <h2>Login</h2>
-  <p>Acesse sua conta para gerenciar suas tarefas.</p>
+<div class="auth-page-wrapper">
+  <mat-card class="auth-card">
+    <mat-card-header>
+      <mat-card-title>TechX | To-do list</mat-card-title>
+      <mat-card-subtitle>Acesse sua conta para continuar</mat-card-subtitle>
+    </mat-card-header>
 
-  <form (ngSubmit)="onLogin()">
-    <div class="form-group">
-      <label for="email">Email:</label>
-      <input 
-        type="email" 
-        id="email" 
-        name="email"
-        [(ngModel)]="loginData.email"
-        required>
-    </div>
-    <div class="form-group">
-      <label for="password">Senha:</label>
-      <input 
-        type="password" 
-        id="password" 
-        name="password"
-        [(ngModel)]="loginData.password"
-        required>
-    </div>
-    <button type="submit">Entrar</button>
-  </form>
+    <mat-card-content>
+      <form (ngSubmit)="onLogin()">
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            type="email"
+            name="email"
+            [(ngModel)]="loginData.email"
+            required>
+        </mat-form-field>
 
-  <div class="auth-link">
-    <p>Ainda não tem uma conta? <a href="/register">Cadastre-se agora</a></p>
-  </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Senha</mat-label>
+          <input
+            matInput
+            type="password"
+            name="password"
+            [(ngModel)]="loginData.password"
+            required>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" class="auth-button">
+          Entrar
+        </button>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions class="auth-link">
+      <p>Ainda não tem uma conta? <a href="/register">Crie uma agora</a></p>
+    </mat-card-actions>
+  </mat-card>
 </div>
