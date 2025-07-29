@@ -1,4 +1,30 @@
 <div class="auth-container">
   <h2>Login</h2>
   <p>Acesse sua conta para gerenciar suas tarefas.</p>
+
+  <form (ngSubmit)="onLogin()">
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input 
+        type="email" 
+        id="email" 
+        name="email"
+        [(ngModel)]="loginData.email"
+        required>
+    </div>
+    <div class="form-group">
+      <label for="password">Senha:</label>
+      <input 
+        type="password" 
+        id="password" 
+        name="password"
+        [(ngModel)]="loginData.password"
+        required>
+    </div>
+    <button type="submit">Entrar</button>
+  </form>
+
+  <div class="auth-link">
+    <p>Ainda não tem uma conta? <a href="/register">Cadastre-se agora</a></p>
+  </div>
 </div>
