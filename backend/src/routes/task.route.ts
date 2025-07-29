@@ -9,11 +9,11 @@ const taskController = new TaskController(taskService);
 
 router.use(authMiddleware);
 
-router.get('/tasks', taskController.findAll.bind(taskController));
-router.get('/tasks/:id', taskController.findById.bind(taskController));
-router.post('/tasks', taskController.create.bind(taskController));
-router.put('/tasks/:id', taskController.update.bind(taskController)); 
-router.patch('/tasks/:id/complete', taskController.toggleCompletion.bind(taskController));
-router.delete('/tasks/:id', taskController.delete.bind(taskController));
+router.get('/', taskController.findAll.bind(taskController));
+router.get('/:id', taskController.findById.bind(taskController));
+router.post('/', taskController.create.bind(taskController));
+router.put('/:id', taskController.update.bind(taskController)); 
+router.patch('/:id/complete', taskController.toggleCompletion.bind(taskController));
+router.delete('/:id', taskController.delete.bind(taskController));
 
 export default router;
