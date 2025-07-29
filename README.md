@@ -80,3 +80,6 @@ Essa é uma aplicação web de gerenciamento de tarefas. A aplicação permite q
 O banco de dados relacional foi modelado com duas entidades principais, `users` e `tasks`, com um relacionamento de um-para-muitos.
 
 **Diagrama de Entidade-Relacionamento (ERD):**
+
+<img width="799" height="320" alt="Captura de Tela 2025-07-29 às 19 05 28" src="https://github.com/user-attachments/assets/44dad206-ab80-4e5d-9122-dbd15726df54" />
+
