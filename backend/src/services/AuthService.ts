@@ -8,7 +8,7 @@ export class AuthService {
 
   async register(userData: Partial<User>): Promise<Omit<User, 'password'>> {
     if (!userData.email || !userData.password) {
-      throw new Error("Email e senha são obrigatórios");
+      throw new Error('Email e senha são obrigatórios');
     }
 
     const hashedPassword = await bcrypt.hash(userData.password, 10);
@@ -27,17 +27,17 @@ export class AuthService {
 
   async login(credentials: Partial<User>): Promise<{ user: Omit<User, 'password'>; token: string } | null> {
     if (!credentials.email || !credentials.password) {
-      throw new Error("Email e senha são obrigatórios");
+      throw new Error('Email e senha são obrigatórios');
     }
 
     const user = await this.userRepository.findOneBy({ email: credentials.email });
     if (!user) {
-      throw new Error("Usuário não encontrado");
+      throw new Error('Usuário não encontrado');
     }
 
     const isPasswordValid = await bcrypt.compare(credentials.password, user.password);
     if (!isPasswordValid) {
-      throw new Error("Senha inválida");
+      throw new Error('Senha inválida');
     }
 
     const token = jwt.sign(

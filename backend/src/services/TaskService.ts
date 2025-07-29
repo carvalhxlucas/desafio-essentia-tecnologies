@@ -1,46 +1,64 @@
-import { Task } from "../entities/Task";
 import { AppDataSource } from "../data-source";
-import { Repository } from "typeorm";
+import { Task } from "../entities/Task";
+import { User } from "../entities/User";
 export class TaskService {
-  private taskRepository: Repository<Task>;
+  private userRepository = AppDataSource.getRepository(User);
+  private taskRepository = AppDataSource.getRepository(Task);
 
-  constructor() {
-    this.taskRepository = AppDataSource.getRepository(Task);
-  }
+  async create(taskData: { title: string }, userId: number): Promise<Task> {
+    const user = await this.userRepository.findOneBy({ id: userId });
+    if (!user) {
+      throw new Error('Usuário não encontrado.');
+    }
 
-  async create(taskData: { title: string }): Promise<Task> {
     const task = this.taskRepository.create({
-      title: taskData.title
+      title: taskData.title,
+      user: user,
     });
+
     return this.taskRepository.save(task);
   }
 
-  async findAll(): Promise<Task[]> {
-    return await this.taskRepository.find();
+  async findAll(userId: number): Promise<Task[]> {
+    return this.taskRepository.find({
+      where: { 
+        user: { 
+          id: userId,
+        },
+      },
+    });
   }
 
-  async findById(id: number): Promise<Task | null> {
-    return await this.taskRepository.findOneBy({ id });
+  async findById(taskId: number, userId: number): Promise<Task | null> {
+    return this.taskRepository.findOne({
+      where: {
+        id: taskId,
+        user: { id: userId },
+      },
+    });
   }
 
-  async update(id: number, taskData: Partial<Task>): Promise<Task | null> {
-    const task = await this.taskRepository.findOneBy({ id });
+  async update(taskId: number, taskData: { title: string }, userId: number): Promise<Task | null> {
+    const task = await this.findById(taskId, userId);
     if (!task) {
       return null;
     }
 
-    this.taskRepository.merge(task, taskData);
+    task.title = taskData.title;
     return this.taskRepository.save(task);
   }
 
-  async delete(id: number): Promise<boolean> {
-    const result = await this.taskRepository.delete(id);
+  async delete(taskId: number, userId: number): Promise<boolean> {
+    const result = await this.taskRepository.delete({
+      id: taskId,
+      user: { id: userId },
+    });
 
     return result.affected !== 0 && result.affected !== null;
   }
 
-  async toggleCompletion(id: number): Promise<Task | null> {
-    const task = await this.taskRepository.findOneBy({ id });
+  async toggleCompletion(taskId: number, userId: number): Promise<Task | null> {
+    const task = await this.findById(taskId, userId);
     if (!task) {
       return null;
     }
