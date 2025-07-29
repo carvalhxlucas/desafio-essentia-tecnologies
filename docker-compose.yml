@@ -15,5 +15,35 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
 
+  backend:
+      build: ./backend
+      container_name: techx-backend
+      restart: on-failure
+      ports:
+        - "3000:3000"
+      volumes:
+        - ./backend:/usr/src/app
+        - /usr/src/app/node_modules
+      environment:
+        - DB_HOST=db
+        - DB_PORT=${DB_PORT}
+        - DB_USERNAME=${DB_USERNAME}
+        - DB_PASSWORD=${DB_PASSWORD}
+        - DB_DATABASE=${DB_DATABASE}
+        - JWT_SECRET=${JWT_SECRET}
+      depends_on:
+        - db
+
+  frontend:
+      build: ./frontend
+      container_name: techx-frontend
+      ports:
+        - "4200:4200"
+      volumes:
+        - ./frontend:/usr/src/app
+        - /usr/src/app/node_modules
+      depends_on:
+        - backend
+
 volumes:
   mysql-data:
