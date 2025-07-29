@@ -1,52 +1,74 @@
-<div class="container">
-  <header>
-    <h1>TechX - To-do App</h1>
-    <p>Gerenciador de tarefas</p>
-  </header>
+<div class="page-wrapper">
+  <div class="content-container">
+    <header>
+      <h1>TechX | To-do List</h1>
+      <p>Gerencie as tarefas do seu dia a dia.</p>
+    </header>
 
-  <main>
-    <form (ngSubmit)="addTask()" class="add-task-form">
-      <input
-        type="text"
-        placeholder="O que precisa ser feito?"
-        [(ngModel)]="newTaskTitle"
-        name="taskTitle"  
-        required>
-      <button type="submit">Adicionar</button>
-    </form>
+    <main class="main"> 
+      <h2>O que precisa ser feito?</h2>
+      <form (ngSubmit)="addTask()" class="add-task-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Nova Tarefa</mat-label>
+          <input matInput
+                placeholder="Ex.: Levar o lixo..."
+                [(ngModel)]="newTaskTitle"
+                name="taskTitle"  
+                (keyup.enter)="addTask()"
+                required>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!newTaskTitle.trim()">
+          <mat-icon>add</mat-icon>
+          Adicionar
+        </button>
+      </form>
 
-    <div class="task-list">
-      <h2>Minhas Tarefas</h2>
-      <div *ngIf="tasks.length === 0" class="empty-state">
-        <p>Você ainda não tem tarefas cadastradas. Que tal adicionar a primeira?</p>
-      </div>
-      <ul>
-        <li *ngFor="let task of tasks" [class.completed]="task.completed">
+      <div class="task-list">
+        <h2>Minhas Tarefas</h2>
+        
+        <div *ngIf="tasks.length === 0" class="empty-state">
+          <p>Você ainda não tem tarefas cadastradas. Que tal adicionar a primeira?</p>
+        </div>
 
-          <div class="task-info" *ngIf="editingTaskId !== task.id">
-            <input 
-              type="checkbox" 
-              [checked]="task.completed"
-              (change)="toggleTaskCompletion(task)">
-            <span>{{ task.title }}</span>
-          </div>
+        <mat-card *ngFor="let task of tasks" class="task-card" [class.completed]="task.completed">
+          <mat-card-content>
+            <div *ngIf="editingTaskId !== task.id" class="task-view">
+              <mat-checkbox
+                [checked]="task.completed"
+                (change)="toggleTaskCompletion(task)">
 
-          <div class="edit-form" *ngIf="editingTaskId === task.id">
-              <input 
-                type="text" 
-                [(ngModel)]="editedTaskTitle"
-                (keyup.enter)="saveTask(task)"
-                (keyup.escape)="cancelEdit()"> <button (click)="saveTask(task)">Salvar</button>
-              <button (click)="cancelEdit()">Cancelar</button>
+                <span class="task-title">{{ task.title }}</span>
+
+              </mat-checkbox>
+              <span class="spacer"></span>
+              <button mat-icon-button (click)="startEdit(task)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteTask(task.id)">
+                <mat-icon>delete_forever</mat-icon>
+              </button>
             </div>
 
-          <div class="task-actions" *ngIf="editingTaskId !== task.id">
-            <button class="edit" (click)="startEdit(task)">✏️</button>
-            <button class="delete" (click)="deleteTask(task.id)">🗑️</button>
-          </div>
+            <div *ngIf="editingTaskId === task.id" class="edit-form">
+              <mat-form-field appearance="outline" class="edit-input">
+                <input
+                  matInput
+                  [(ngModel)]="editedTaskTitle"
+                  (keyup.enter)="saveTask(task)"
+                  (keyup.escape)="cancelEdit()"
+                  name="editedTitle">
+              </mat-form-field>
+              <button mat-icon-button color="primary" (click)="saveTask(task)">
+                <mat-icon>check_circle</mat-icon>
+              </button>
+              <button mat-icon-button (click)="cancelEdit()">
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
 
-        </li>
-      </ul>
-    </div>
-  </main>
+    </main>
+  </div>
 </div>

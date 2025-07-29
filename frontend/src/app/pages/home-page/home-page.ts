@@ -4,12 +4,27 @@ import { FormsModule } from '@angular/forms';
 import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/task.model';
 
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatListModule } from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
+
 @Component({
   selector: 'app-home-page',
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCheckboxModule,
+    MatListModule,
+    MatCardModule
   ],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss'
