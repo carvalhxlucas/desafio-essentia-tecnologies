@@ -9,6 +9,9 @@ import { AppDataSource } from './data-source';
 import taskRoutes from './routes/task.route';
 import authRoutes from './routes/auth.route';
 
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './swaggerConfig';  
+
 require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 
 AppDataSource.initialize()
@@ -24,6 +27,7 @@ AppDataSource.initialize()
     // Rotas da aplicação
     app.use('/api/auth', authRoutes);
     app.use('/api/tasks', taskRoutes);
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
