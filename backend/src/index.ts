@@ -1,13 +1,15 @@
 import dotenv from 'dotenv';
 import path from 'path';
-dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 import express from 'express';
 import 'reflect-metadata';
 import cors from 'cors';
+import { AppDataSource } from './data-source';
+
 import taskRoutes from './routes/task.route';
 import authRoutes from './routes/auth.route';
-import { AppDataSource } from './data-source';
+
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 
 AppDataSource.initialize()
   .then(() => {
@@ -20,8 +22,8 @@ AppDataSource.initialize()
     app.use(express.json());
 
     // Rotas da aplicação
-    app.use('/api', authRoutes);
-    app.use('/api', taskRoutes);
+    app.use('/api/auth', authRoutes);
+    app.use('/api/tasks', taskRoutes);
 
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
