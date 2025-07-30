@@ -4,6 +4,8 @@
 
 Essa é uma aplicação web de gerenciamento de tarefas. A aplicação permite que usuários se cadastrem, façam login e gerenciem suas tarefas diárias.
 
+<img width="773" height="425" alt="Captura de Tela 2025-07-30 às 10 04 02" src="https://github.com/user-attachments/assets/8266ecc3-3ec6-487a-bd8c-148fd0c31b72" />
+
 ---
 
 ## Funcionalidades Implementadas
@@ -52,7 +54,7 @@ Essa é uma aplicação web de gerenciamento de tarefas. A aplicação permite q
 
 1.  **Clone o Repositório:**
     ```bash
-    git clone [https://github.com/carvalhxlucas/desafio-essentia-tecnologies.git](https://github.com/carvalhxlucas/desafio-essentia-tecnologies.git)
+    git clone https://github.com/carvalhxlucas/desafio-essentia-tecnologies.git
     cd desafio-essentia-tecnologies
     ```
 
