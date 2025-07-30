@@ -25,7 +25,7 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './login.html',
   styleUrl: './login.scss'
 })
-export class LoginComponent {
+export class Login {
   loginData = {
     email: '',
     password: ''

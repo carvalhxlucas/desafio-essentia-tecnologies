@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { HomePage } from './pages/home-page/home-page';
-import { LoginComponent } from './pages/login/login';
-import { RegisterComponent } from './pages/register/register';
+import { Login } from './pages/login/login';
+import { Register } from './pages/register/register';
 import { authGuard } from './shared/guards/auth-guard';
 
 export const routes: Routes = [
@@ -13,11 +13,11 @@ export const routes: Routes = [
 
   {
     path: 'login',
-    component: LoginComponent
+    component: Login
   },
 
   {
     path: 'register',
-    component: RegisterComponent
+    component: Register
   }
 ];
