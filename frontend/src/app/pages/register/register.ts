@@ -25,7 +25,7 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './register.html',
   styleUrl: './register.scss'
 })
-export class RegisterComponent {
+export class Register {
   registerData = {
     email: '',
     password: ''
