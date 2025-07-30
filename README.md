@@ -8,6 +8,16 @@ Essa é uma aplicação web de gerenciamento de tarefas. A aplicação permite q
 
 ---
 
+## Sumário
+
+* [Funcionalidades Implementadas](#-funcionalidades-implementadas)
+* [Tecnologias Utilizadas](#-tecnologias-utilizadas)
+* [Como Rodar o Projeto](#-como-rodar-o-projeto)
+* [Estrutura do Banco de Dados](#-estrutura-do-banco-de-dados)
+* [Decisões de Arquitetura](#-decisões-de-arquitetura)
+
+---
+
 ## Funcionalidades Implementadas
 
 * **Autenticação de Usuários:**
@@ -27,20 +37,21 @@ Essa é uma aplicação web de gerenciamento de tarefas. A aplicação permite q
 ## Tecnologias Utilizadas
 
 **Backend:**
-* **Node.js** com **TypeScript**
-* **Express.js** para a criação da API RESTful.
-* **TypeORM** como ORM para interação com o banco de dados.
-* **MySQL** como banco de dados relacional.
-* **JSON Web Tokens (JWT)** para autenticação.
-* **Bcrypt.js** para criptografia de senhas.
+* Node.js com TypeScript
+* Express.js
+* TypeORM
+* MySQL
+* JSON Web Tokens (JWT) & Bcrypt.js
+* Swagger (para documentação da API)
 
 **Frontend:**
-* **Angular** como framework.
-* **TypeScript**
-* **Angular Material** para a biblioteca de componentes visuais.
+* Angular
+* TypeScript
+* Angular Material
 
 **Ambiente e Automação:**
-* **Docker** e **Docker Compose** para orquestrar toda a aplicação em containers isolados.
+* Docker e Docker Compose para orquestrar toda a aplicação em containers isolados.
+* GitHub Actions para Integração Contínua (CI)
 
 ---
 
@@ -74,6 +85,7 @@ Essa é uma aplicação web de gerenciamento de tarefas. A aplicação permite q
     Após o build terminar, a aplicação estará disponível nos seguintes endereços:
     * **Frontend (Aplicação Web):** `http://localhost:4200`
     * **Backend (API):** `http://localhost:3000`
+    * **Documentação da API (Swagger):** `http://localhost:3000/api-docs`
 
 ---
 
@@ -85,3 +97,13 @@ O banco de dados relacional foi modelado com duas entidades principais, `users` 
 
 <img width="799" height="320" alt="Captura de Tela 2025-07-29 às 19 05 28" src="https://github.com/user-attachments/assets/44dad206-ab80-4e5d-9122-dbd15726df54" />
 
+---
+
+## Decisões de Arquitetura
+
+* **Orquestração com Docker Compose:** Optei por containerizar toda a aplicação para garantir um ambiente de desenvolvimento consistente e fácil de buildar, elimina problemas de "na minha máquina funciona" 😅.
+* **Autenticação JWT:** A escolha do JWT permite a criação de um sistema de login seguro e stateless, ideal para SPAs como o Angular.
+* **CI com GitHub Actions:** Implementei um workflow de Integração Contínua visando a qualidade do código, prevenindo bugs e automatizando testes em cada alteração.
+* **Documentação com Swagger:** A documentação da API foi gerada com Swagger para fornecer uma interface clara para os endpoints.
+
+---
