@@ -13,7 +13,7 @@ router.use(authMiddleware);
 /**
  * @swagger
  * tags:
- * name: Tarefas
+ * - name: Tarefas
  * description: Gerenciamento de tarefas
  */
 

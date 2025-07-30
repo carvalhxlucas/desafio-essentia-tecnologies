@@ -9,7 +9,7 @@ const authController = new AuthController(authService);
 /**
  * @swagger
  * tags:
- * name: Autenticação
+ * - name: Autenticação
  * description: Endpoints de cadastro e login de usuários
  */
 
