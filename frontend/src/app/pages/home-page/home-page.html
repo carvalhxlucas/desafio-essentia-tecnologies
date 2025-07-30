@@ -1,8 +1,21 @@
 <div class="page-wrapper">
   <div class="content-container">
     <header>
-      <h1>TechX | To-do List</h1>
-      <p>Gerencie as tarefas do seu dia a dia.</p>
+      <div class="header-content">
+        <h1>TechX | To-do List</h1>
+        <p>Gerencie as tarefas do seu dia a dia.</p>
+      </div>
+      
+      <div class="header-actions">
+        <a mat-stroked-button href="http://localhost:3000/api-docs" target="_blank">
+          <mat-icon>description</mat-icon>
+          Documentação da API
+        </a>
+        <button mat-stroked-button color="warn" (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          Sair
+        </button>
+      </div>
     </header>
 
     <main class="main"> 

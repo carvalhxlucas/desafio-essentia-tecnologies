@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/task.model';
+import { Router } from '@angular/router';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -36,7 +37,10 @@ export class HomePage implements OnInit {
   editingTaskId: number | null = null;
   editedTaskTitle: string = '';
 
-  constructor(private taskService: TaskService) {}
+  constructor(
+    private taskService: TaskService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadTasks();
@@ -124,5 +128,11 @@ export class HomePage implements OnInit {
         this.cancelEdit();
       }
     });
+  }
+
+  logout(): void {
+    localStorage.removeItem('authToken');
+    this.router.navigate(['/login']);
+    console.log('Usuário deslogado com sucesso!');
   }
 }
